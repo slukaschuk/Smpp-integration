@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
 import java.io.IOException;
 
 @SpringBootApplication
-@ImportResource("/META-INF/integration.xml")
+//@ImportResource("/META-INF/integration.xml")
 public class SmppApplication {
 	private static Logger log = LoggerFactory.getLogger(SmppApplication.class);
 

@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:int-smpp="http://www.springframework.org/schema/integration/smpp"
-       xmlns:int="http://www.springframework.org/schema/integration"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans.xsd
-			http://www.springframework.org/schema/integration
-			http://www.springframework.org/schema/integration/spring-integration.xsd
-			http://www.springframework.org/schema/integration/smpp
-			http://www.springframework.org/schema/integration/smpp/spring-integration-smpp.xsd">
+               xmlns:int-smpp="http://www.springframework.org/schema/integration/smpp"
+               xmlns:int="http://www.springframework.org/schema/integration"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans.xsd
+                    http://www.springframework.org/schema/integration
+                    http://www.springframework.org/schema/integration/spring-integration.xsd
+                    http://www.springframework.org/schema/integration/smpp
+                    http://www.springframework.org/schema/integration/smpp/spring-integration-smpp-1.0.xsd">
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
+            <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 
-    <int:channel id="inboundChannel"/>
+            <int:channel id="inboundChannel"/>
 
-    <int-smpp:inbound-channel-adapter id="smpp" channel="inboundChannel"/>
+            <int-smpp:inbound-channel-adapter id="smpp" channel="inboundChannel"/>
 
-    <int:poller id="poller" fixed-delay="5000"/>
+            <int:poller id="poller" fixed-delay="5000"/>
 
-    <int:logging-channel-adapter id="infolog" logger-name="infologger" level="INFO" channel="outboundChannel"/>
+            <int:logging-channel-adapter id="infolog" logger-name="infologger" level="INFO" channel="outboundChannel"/>
 
-    <int:channel id="outboundChannel"/>
-
+            <int:channel id="outboundChannel"/>
+        -->
 </beans>
