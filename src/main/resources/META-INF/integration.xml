@@ -8,7 +8,7 @@
                     http://www.springframework.org/schema/integration
                     http://www.springframework.org/schema/integration/spring-integration.xsd
                     http://www.springframework.org/schema/integration/smpp
-                    http://www.springframework.org/schema/integration/smpp/spring-integration-smpp-1.0.xsd">
+                    http://www.springframework.org/schema/integration/smpp/spring-integration-smpp.xsd">
 
             <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"/>
 

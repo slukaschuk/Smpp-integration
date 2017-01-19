@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
 		http://www.springframework.org/schema/integration/smpp http://www.springframework.org/schema/integration/smpp/spring-integration-smpp.xsd">
 
-    <context:property-placeholder location="smpp.properties" />
+    <context:property-placeholder location="classpath:smpp.properties" />
 
     <bean id="tcpIpUtils" class="org.springframework.integration.test.util.SocketUtils" />
 
@@ -20,7 +20,7 @@
     <bean id="mockSmppServer" class="io.smsc.integration.MockSmppServer">
         <constructor-arg ref="smppPort" />
         <constructor-arg value="${smpp.systemId}"/>
-        <constructor-arg value="${smpp.password" />
+        <constructor-arg value="${smpp.password}" />
     </bean>
 
 </beans>

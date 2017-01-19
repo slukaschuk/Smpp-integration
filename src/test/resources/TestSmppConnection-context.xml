@@ -12,33 +12,33 @@
 
     <import resource="classpath:smppConnection-context.xml"/>
 
-    <int:channel id="inboundChannel" />
-    <int:channel id="outboundChannel" />
-    <int:channel id="receiptChannel" />
+    <int:channel id="inboundChannel"/>
+    <int:channel id="outboundChannel"/>
+    <int:channel id="receiptChannel"/>
 
     <bean id="session" class="org.springframework.integration.smpp.session.SmppSessionFactoryBean">
-        <property name="host" value="smpp.activexperts-labs.com" />
-        <property name="port" value="2775" />
-        <property name="password" value="812056" />
-        <property name="systemId" value="AX005" />
-        <property name="bindType" value="BIND_RX" />
-        <property name="autoStartup" value="true" />
-        <property name="addressRange" value="${smpp.systemId}" />
+        <property name="host" value="${smpp.host}"/>
+        <property name="port" ref="smppPort"/>
+        <property name="password" value="${smpp.password}"/>
+        <property name="systemId" value="${smpp.systemId}"/>
+        <property name="bindType" value="BIND_RX"/>
+        <property name="autoStartup" value="true"/>
+        <property name="addressRange" value="${smpp.systemId}"/>
     </bean>
 
     <bean id="session2" class="org.springframework.integration.smpp.session.SmppSessionFactoryBean">
-        <property name="host" value="${smpp.host}" />
-        <property name="port" ref="smppPort" />
-        <property name="password" value="${smpp.password}" />
-        <property name="systemId" value="${smpp.systemId}" />
-        <property name="bindType" value="BIND_TX" />
-        <property name="autoStartup" value="true" />
+        <property name="host" value="${smpp.host}"/>
+        <property name="port" ref="smppPort"/>
+        <property name="password" value="${smpp.password}"/>
+        <property name="systemId" value="${smpp.systemId}"/>
+        <property name="bindType" value="BIND_TX"/>
+        <property name="autoStartup" value="true"/>
     </bean>
 
     <int-smpp:inbound-channel-adapter channel="inboundChannel"
-                                      smpp-session-ref="session" />
+                                      smpp-session-ref="session"/>
 
     <int-smpp:outbound-gateway request-channel="outboundChannel"
-                               reply-channel="receiptChannel" smpp-session-ref="session2" />
+                               reply-channel="receiptChannel" smpp-session-ref="session2"/>
 
 </beans>
