@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:int-smpp="http://www.springframework.org/schema/integration/smpp"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/integration/smpp http://www.springframework.org/schema/integration/smpp/spring-integration-smpp.xsd">
+
+	<import resource="classpath:smppConnection-context.xml"/>
+
+	<!-- RECEIVES SMSs from a specific number -->
+	<int:channel id="inbound">
+		<int:interceptors>
+			<int:wire-tap channel="LoggingChannel"/>
+		</int:interceptors>
+	</int:channel>
+
+	<bean id="inboundSession"
+		class="org.springframework.integration.smpp.session.SmppSessionFactoryBean">
+		<property name="host" value="${smpp.host}" />
+		<property name="port" ref="smppPort" />
+		<property name="bindType" value="BIND_RX" />
+		<property name="password" value="${smpp.password}" />
+		<property name="addressRange" value="${test.dst.number}" />
+		<property name="systemId" value="${smpp.systemId}" />
+	</bean>
+
+	<bean id="smppInboundChannelAdapter" class="org.springframework.integration.smpp.inbound.SmppInboundChannelAdapter">
+		<property name="smppSession" ref="inboundSession" />
+		<property name="channel" ref="inbound" />
+	</bean>
+
+	<int-smpp:inbound-channel-adapter channel="inbound"
+									  smpp-session-ref="inboundSession" id="smppinbound"/>
+
+
+
+	<int:logging-channel-adapter
+			id="LoggingChannel"
+			logger-name="io.smsc.integration" level="INFO"
+			expression="'Incomming message: ' +Payload"/>
+
+
+
+
+</beans>
