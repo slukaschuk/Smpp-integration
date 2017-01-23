@@ -4,12 +4,13 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 
 import java.io.IOException;
 
 @SpringBootApplication
-@ImportResource("classpath:/META-INF/integration.xml")
+@ImportResource({"classpath:/META-INF/integration.xml", "classpath:smppConnection-context.xml"})
 @Log4j2
 public class SmppApplication {
 

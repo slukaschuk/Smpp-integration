@@ -17,7 +17,7 @@
         <constructor-arg value="#{tcpIpUtils.findAvailableServerSocket(13000)}"/>
     </bean>
 
-    <bean id="mockSmppServer" class="io.smsc.integration.SmppServerSim">
+    <bean id="SmppServerSim" class="io.smsc.integration.SmppServerSim">
         <constructor-arg ref="smppPort" />
         <constructor-arg value="${smpp.systemId}"/>
         <constructor-arg value="${smpp.password}" />

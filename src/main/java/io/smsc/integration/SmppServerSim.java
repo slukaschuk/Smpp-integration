@@ -13,6 +13,7 @@ import org.jsmpp.util.MessageId;
 import org.jsmpp.util.RandomMessageIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,22 +25,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
-public class MockSmppServer extends ServerResponseDeliveryAdapter implements Runnable, ServerMessageReceiverListener {
-    /**
-     * Agreement to make it easy to test some functionality
-     */
+public class SmppServerSim extends ServerResponseDeliveryAdapter implements Runnable, ServerMessageReceiverListener {
     public static final class Agreement {
-        /**
-         * Agreement to throw error when destination set to this value
-         */
         public static final String THROW_NO_DESTINATION_EXCEPTION = "NoRouteDestination";
-        /**
-         * Agreement to delay processing of sms message. Useful to simulate slow connection
-         */
         public static final String DELAY_PROCESSING = "DelayMe";
-        /**
-         * Agreement to delay sending back delivery receipt. Useful for testing Delivery Receipt
-         */
         public static final String DELAY_DELIVERY_RECEIPT = "DelayDeliveryReceipt";
     }
 
@@ -59,7 +48,7 @@ public class MockSmppServer extends ServerResponseDeliveryAdapter implements Run
     private final ExecutorService execServiceDelReceipt = Executors.newFixedThreadPool(100);
     private final MessageIDGenerator messageIDGenerator = new RandomMessageIDGenerator();
 
-    public MockSmppServer(int port, String systemId, String password) throws IOException {
+    public SmppServerSim(int port, String systemId, String password) throws IOException {
         this.systemId = systemId;
         this.password = password;
         this.port = port;
@@ -68,7 +57,7 @@ public class MockSmppServer extends ServerResponseDeliveryAdapter implements Run
     public void run() {
         try {
             this.sessionListener = new SMPPServerSessionListener(port);
-            sessionListener.setTimeout(acceptConnectionTimeout);
+           // sessionListener.setTimeout(acceptConnectionTimeout);
 
             logger.info("Listening on port {}", port);
             while (run) {
@@ -89,12 +78,6 @@ public class MockSmppServer extends ServerResponseDeliveryAdapter implements Run
         }
     }
 
-    /**
-     * Forcing the server to stop.
-     *
-     * @throws InterruptedException
-     * @throws IOException
-     */
     public void stop() throws InterruptedException, IOException {
         run = false;
         execService.shutdown();
@@ -403,12 +386,12 @@ public class MockSmppServer extends ServerResponseDeliveryAdapter implements Run
     }
 
     public void startServer() {
-        logger.debug("Starting mock SMPP server");
+        logger.info("Starting SMPP server sim");
         execService.submit(this);
     }
 
     public void restartServer() throws InterruptedException, IOException {
-        logger.debug("Stopping server");
+        logger.info("Stopping server");
         stop();
         connectionSessionMap.clear();
         startServer();
@@ -416,7 +399,7 @@ public class MockSmppServer extends ServerResponseDeliveryAdapter implements Run
 
     @PreDestroy
     public void onDestroy() throws InterruptedException, IOException {
-        logger.debug("Destroying mock SMPP server");
+        logger.info("Destroying SMPP server sim");
         stop();
         connectionSessionMap.clear();
     }
