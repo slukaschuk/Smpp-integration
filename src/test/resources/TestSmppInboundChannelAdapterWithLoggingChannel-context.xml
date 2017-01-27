@@ -44,7 +44,4 @@
 			logger-name="io.smsc.integration" level="INFO"
 			expression="'Incomming message: ' +Payload"/>
 
-
-
-
 </beans>

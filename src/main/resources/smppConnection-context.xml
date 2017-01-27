@@ -11,10 +11,9 @@
 
     <context:property-placeholder location="classpath:smpp.properties" />
 
-    <bean id="tcpIpUtils" class="org.springframework.integration.test.util.SocketUtils" />
 
     <bean id="smppPort" class="java.lang.Integer">
-        <constructor-arg value="#{tcpIpUtils.findAvailableServerSocket(13000)}"/>
+        <constructor-arg value="${smpp.port}"/>
     </bean>
 
     <bean id="SmppServerSim" class="io.smsc.integration.SmppServerSim">
